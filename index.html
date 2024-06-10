@@ -8,11 +8,16 @@
         body {
             font-family: monospace;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             background-color: #000;
             color: #fff;
+            margin: 0;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
         }
         .game {
             display: flex;
@@ -31,9 +36,21 @@
             margin-bottom: 20px;
             font-size: 24px;
         }
+        .instructions {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>Career Path Game</h1>
+        <div class="instructions">
+            <p>Navigate through your career by negotiating salaries.</p>
+            <p>Press the <strong>spacebar</strong> to negotiate salary.</p>
+            <p>Depending on the result, you will move up or down a level.</p>
+            <p>Try to accumulate the highest total salary possible!</p>
+        </div>
+    </div>
     <div class="game">
         <div class="score" id="score">Total Salary: $0</div>
         <div id="game">

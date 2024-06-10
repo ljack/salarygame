@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Path Game</title>
+    <style>
+        body {
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+        }
+        .game {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .level {
+            display: flex;
+            justify-content: space-between;
+            width: 500px;
+            border: 1px solid #fff;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .score {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game">
+        <div class="score" id="score">Total Salary: $0</div>
+        <div id="game">
+            <!-- Levels will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        const levels = 5; // Total number of levels
+        const subLevels = 3; // Sub-levels in each level
+        let currentLevel = 2; // Start at the middle level
+        let currentSubLevel = 0; // Start at the first sub-level
+        let totalSalary = 0; // Initialize total salary
+
+        const game = document.getElementById('game');
+        const scoreDisplay = document.getElementById('score');
+
+        function createLevel(level) {
+            const levelDiv = document.createElement('div');
+            levelDiv.classList.add('level');
+            levelDiv.dataset.level = level;
+            levelDiv.innerHTML = `<span>${level === currentLevel && currentSubLevel === 0 ? '@' : ' '}</span><span>$</span>`;
+            return levelDiv;
+        }
+
+        function renderGame() {
+            game.innerHTML = '';
+            for (let i = 0; i < levels; i++) {
+                game.appendChild(createLevel(i));
+            }
+        }
+
+        function negotiateSalary() {
+            const salary = Math.floor(Math.random() * 1000) + 500; // Random salary between 500 and 1500
+            const result = Math.random() > 0.5; // Random negotiation result
+            if (result) {
+                totalSalary += salary;
+                if (currentLevel > 0) {
+                    currentLevel--;
+                }
+            } else {
+                totalSalary -= salary;
+                if (currentLevel < levels - 1) {
+                    currentLevel++;
+                }
+            }
+            currentSubLevel++;
+            if (currentSubLevel >= subLevels) {
+                currentSubLevel = 0;
+            }
+            scoreDisplay.innerText = `Total Salary: $${totalSalary}`;
+            renderGame();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') {
+                negotiateSalary();
+            }
+        });
+
+        renderGame();
+    </script>
+</body>
+</html>
